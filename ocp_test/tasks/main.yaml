@@ -1,0 +1,12 @@
+---
+- import_tasks: download.yaml
+  tags: install
+- import_tasks: uninstall.yaml
+  tags: uninstall
+  when: uninstall_ocp is defined and uninstall_ocp== "true"
+- import_tasks: create_config.yaml
+  tags: config
+  when: uninstall_ocp is not defined or uninstall_ocp!= "true"
+- import_tasks: install_cluster.yaml
+  when: uninstall_ocp is not defined or uninstall_ocp!= "true"
+  tags: create

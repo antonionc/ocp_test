@@ -1,0 +1,17 @@
+---
+# tasks file for ocp_test
+- name: Ensure directory exists
+  file:
+    path: "{{item}}"
+    state: directory
+  with_items:
+    - ~/{{cluster_name}}
+    - ~/.aws
+- name: copy install-config to directory
+  template:
+    src: install-config.yaml
+    dest: "{{cluster_name}}/install-config.yaml"
+- name: copy aws credentials directory
+  template:
+    src: aws_cred
+    dest: .aws/credentials

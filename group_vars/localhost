@@ -1,0 +1,3 @@
+---
+kubeconfig: "{{ local_kubeconfig }}"
+oc_exec: oc

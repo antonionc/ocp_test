@@ -1,0 +1,21 @@
+---
+# tasks file for ocp_test
+- name: Install cluster
+  shell:
+    cmd: nohup ./openshift-install create cluster --dir {{cluster_name}} </dev/null >/dev/null 2>&1 &
+    creates: "{{cluster_name}}/auth"
+- name: Wait for initial setup
+  pause:
+    prompt: Waiting for the initial creation of cluser {{cluster_name}}
+    seconds: 60
+- name: wait for bootstrap
+  shell:
+    cmd: ./openshift-install wait-for bootstrap-complete --dir {{cluster_name}} 
+- name: wait for cluster
+  shell:
+    cmd: ./openshift-install wait-for install-complete --dir {{cluster_name}} 
+- name: Save Kubeconfig
+  fetch:
+    src: "{{ cluster_name }}/auth/kubeconfig"
+    dest: "{{ local_kubeconfig }}"
+    flat: true

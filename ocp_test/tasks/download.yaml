@@ -1,0 +1,26 @@
+---
+# tasks file for ocp_test
+- name: download oc
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ocp_version}}/openshift-client-linux-{{ocp_version}}.tar.gz
+    dest: .
+    checksum: sha256:{{oc_checksum}}
+  register: oc_download
+- name: dowload oc-install
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ocp_version}}/openshift-install-linux-{{ocp_version}}.tar.gz
+    dest: .
+    checksum: sha256:{{oc_install_checksum}}
+  register: oc_install_download
+- name: extract oc into home
+  unarchive:
+    src: "~{{oc_download.owner}}/{{oc_download.dest}}"
+    remote_src: yes
+    dest: .
+  when: oc_download.changed
+- name: extract oc install into home
+  unarchive:
+    src: "~{{oc_install_download.owner}}/{{oc_install_download.dest}}"
+    remote_src: yes
+    dest: .
+  when: oc_install_download.changed
