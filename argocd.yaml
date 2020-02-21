@@ -1,0 +1,6 @@
+---
+- hosts: bastion-ocp
+  vars:
+    argocd_version: v1.3.0
+  roles: 
+    - ocp_argocd
