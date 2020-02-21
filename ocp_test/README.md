@@ -3,15 +3,30 @@ OCP Test
 
 Role to configure a ocp 4 cluster on AWS 
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+To specify a version to download the following variables need to be specified
+The role would download the oc client and the openshift-installer
+ocp_version: 4.3.1
+oc_checksum: 9938b9894b50a717a94c2baa6eceeabc23678f059852b76d67f8c1d520db2fd6
+oc_install_checksum: 3a01b5e64be2a7ac510dc8b55e88d7d541a2930174faec8b9224f97eb69f6817
+
+The configuration of the installer would use the following variables:
+
+For AWS conection:
+aws_key: AWSAWSAWSAWSAWS
+aws_secret: SecretSecretSecret
+
+For  cluster configuration:
+base_domain: mycluster.example.com
+pull_secret: {"auths":{"cloud.openshift.com":{"auth":"foo","email":"user@example.com"},"quay.io":{"auth":"foo","email":"user@example.com"},"registry.connect.redhat.com":{"auth":"foo","email":"user@example.com"},"registry.redhat.io":{"auth":"foo","email":"user@example.com"}}}
+
+variables for executing openshift commands locally and remotely:
+
+kubeconfig: ~/{{ cluster_name }}/auth/kubeconfig
+local_kubeconfig: kubeconfig_{{ cluster_name }}
+oc_exec: ./oc
 
 Dependencies
 ------------
