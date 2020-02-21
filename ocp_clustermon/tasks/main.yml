@@ -1,0 +1,4 @@
+---
+# tasks file for ocp_clustermon
+- import_tasks: setup.yml
+  tags: clmon_setup

@@ -1,0 +1,6 @@
+---
+- name: Apply cluster-monitoring-config config map
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'clmon-cm.yaml') }}"
