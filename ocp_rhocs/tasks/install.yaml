@@ -1,0 +1,16 @@
+---
+- name: Create namespaces and Operator Groups
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'rhocs-ns.yaml') }}"
+    #- name: Create Local Catalog Source - Only needed in the Release Candidate Days
+    #k8s:
+    #kubeconfig: "{{ kubeconfig }}"
+    #state: present
+    #definition: "{{ lookup('file', 'rhocs-catalog.yaml') }}"
+- name: Create Subscription
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'rhocs-sub.yaml') }}"

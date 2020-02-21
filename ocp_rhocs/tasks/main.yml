@@ -1,0 +1,6 @@
+---
+# tasks file for ocp_rhocs
+- import_tasks: install.yaml
+  tags: install
+- import_tasks: storage_cluster.yaml
+  tags: create_scluster

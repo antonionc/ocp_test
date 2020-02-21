@@ -1,0 +1,19 @@
+- name: create list of nodes to run RHOCS on
+  debug: 
+    msg: Not implemented yet
+  when: rhocs_nodes | default([])| length==0 
+
+- name: Add label to nodes
+  debug: 
+    msg: Not implemented yet
+    #k8s: 
+    #kubeconfig: "{{ kubeconfig }}"
+    #state: present
+    #definition: "{{ lookup('template', 'rhocs-ns.yaml') }}"
+    #with_items: rhocs_nodes
+
+- name: Create Storage Cluster
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'rhocs-scluster.yaml') }}"

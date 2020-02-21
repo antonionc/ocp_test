@@ -1,0 +1,11 @@
+---
+# Create new role for RHOCS
+- hosts: bastion-ocp
+  vars:
+    msets:
+    - replicas: 1
+      role: rhocs
+      instance_type: m4.4xlarge
+  roles: 
+  - ocp_mset
+  - ocp_rhocs
