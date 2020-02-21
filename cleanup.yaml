@@ -1,0 +1,6 @@
+---
+- hosts: bastion-ocp
+  roles: 
+    - ocp_test
+  vars: 
+    - uninstall_ocp: "true"

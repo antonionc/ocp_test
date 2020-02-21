@@ -1,0 +1,12 @@
+---
+- hosts: bastion-ocp
+  vars:
+    msets:
+    - replicas: 1
+      role: infra
+      instance_type: m4.2xlarge
+    - replicas: 1
+      role: worker
+      instance_type: m4.xlarge
+  roles: 
+    - ocp_mset

@@ -1,0 +1,19 @@
+---
+- name: create machineset in zone a
+  k8s: 
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'mset.yml', template_vars=dict(replicas=item.replicas, role=item.role, zone='a', instance_type=item.instance_type, hdd_size=item.hdd_size )) }}"
+  with_items: "{{ msets }}"
+- name: create machineset in zone b
+  k8s: 
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'mset.yml', template_vars=dict(replicas=item.replicas, role=item.role, zone='b', instance_type=item.instance_type, hdd_size=item.hdd_size )) }}"
+  with_items: "{{ msets }}"
+- name: create machineset in zone c
+  k8s: 
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'mset.yml', template_vars=dict(replicas=item.replicas, role=item.role, zone='c', instance_type=item.instance_type, hdd_size=item.hdd_size)) }}"
+  with_items: "{{ msets }}"

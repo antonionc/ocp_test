@@ -1,0 +1,31 @@
+---
+- name: Read cluster
+  k8s_facts:
+    api: config.openshift.io/v1
+    kubeconfig: "{{ kubeconfig }}"
+    kind: Infrastructure
+    name: cluster
+  register: cluster_info
+- name: Debug
+  debug:
+    var: cluster_info
+- name: Configure Infrastructure ID
+  set_fact:
+    infrastructure_id: "{{ cluster_info.resources[0].status.infrastructureName }}"
+- name: Configure region
+  set_fact:
+    region: "{{ cluster_info.resources[0].status.platformStatus.aws.region }}"
+- name: Read ami
+  k8s_facts:
+    api: machine.openshift.io/v1beta1
+    kubeconfig: "{{ kubeconfig }}"
+    kind: MachineSet
+    name: "{{ infrastructure_id }}-worker-{{ region }}a"
+    namespace: openshift-machine-api
+  register: machine_set
+- name: Configure ami-id
+  set_fact:
+    ami_id: "{{ machine_set.resources[0].spec.template.spec.providerSpec.value.ami.id }}"
+- name: Using region {{ region }} of {{ infrastructure_id }}
+  debug:
+    msg: Using region {{ region }} of {{ infrastructure_id }}

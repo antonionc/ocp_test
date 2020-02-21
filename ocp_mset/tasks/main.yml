@@ -1,0 +1,6 @@
+---
+# tasks file for ocp_mset
+- import_tasks: configure.yml
+  tags: configure
+- import_tasks: scale.yml
+  tags: scale
