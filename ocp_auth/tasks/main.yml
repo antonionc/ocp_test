@@ -1,0 +1,8 @@
+---
+# tasks file for ocp_auth
+- import_tasks: httpd.yml
+  tags: install
+  when: htpasswd is defined
+- import_tasks: authz.yml
+  tags: roles
+  when: admin_users is defined or admin_groups is defined

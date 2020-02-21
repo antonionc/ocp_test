@@ -1,0 +1,9 @@
+---
+- name: debug
+  debug: 
+    msg: "Admin users: {{ admin_users | default('none') }}, admin groups: {{ admin_groups | default ('none') }}"
+- name: Add cluster-admin clusterrole to users
+  shell:
+    cmd: KUBECONFIG={{kubeconfig}} ./oc adm policy add-cluster-role-to-user cluster-admin {{ item }} --rolebinding-name cluster-admins
+  with_items: "{{ admin_users }}"
+    

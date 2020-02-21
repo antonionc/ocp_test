@@ -1,0 +1,53 @@
+---
+- name: Make sure passlib is installed
+  become: true
+  yum:
+   name: python-passlib
+   state: latest
+- name: Debug
+  debug:
+    msg: "User: {{ item.key }}, Pass: {{ item.value }}"
+  with_dict: "{{ htpasswd | default ([]) }}"
+- name: create temporary htpasswd file
+  tempfile:
+    state: file
+    suffix: _htpasswd
+  register: htpasswd_file
+- name: Add Users
+  htpasswd:
+    path: "{{ htpasswd_file.path }}"
+    name: "{{ item.key }}"
+    password: "{{ item.value }}"
+  with_dict:  "{{ htpasswd | default([]) }}"
+# Local temporary file
+- name: reading htpasswd
+  set_fact:
+    htpasswd_content: "{{ lookup ('file', htpasswd_file.path)  }}"
+  when:  ansible_hostname == 'localhost'
+- name: encoding htpasswd
+  set_fact:
+    htpasswd_b64: "{{ htpasswd_content | to_json | b64encode}}"
+  when:  ansible_hostname == 'localhost'
+# Remote temporary file
+- name: read remote htpasswd file
+  slurp:
+    src: "{{ htpasswd_file.path }}"
+  register: htpasswd_slurp
+  when:  ansible_hostname != 'localhost'
+- name: reading encoded htpasswd
+  set_fact:
+    htpasswd_b64: "{{ htpasswd_slurp.content }}"
+  when:  ansible_hostname != 'localhost'
+- name: Htpasswd content
+  debug: 
+    var: htpasswd_b64
+- name: Create Secret
+  k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig }}"
+    definition: "{{ lookup('template', 'htpasswd_secret.yaml') }}"
+- name: Create Identity Provider
+  k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig }}"
+    definition: "{{ lookup('template', 'htpasswd_provider.yaml') }}"
