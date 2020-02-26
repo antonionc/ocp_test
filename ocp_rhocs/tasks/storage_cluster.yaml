@@ -1,16 +1,33 @@
-- name: create list of nodes to run RHOCS on
-  debug: 
-    msg: Not implemented yet
+- name: find nodes to run RHOCS on
+  k8s_info: 
+    kubeconfig: "{{ kubeconfig }}"
+    kind: Node
+    label_selectors:
+      - node-role.kubernetes.io/rhocs= 
   when: rhocs_nodes | default([])| length==0 
+  register: target_nodes
+
+- name: Create list of nodes to run RHOCS on
+  set_fact:
+     rhocs_nodes: "{{ target_nodes.resources | map (attribute='metadata')| list | map(attribute='name') | list }}" 
+
+
+- name: Debug nodes
+  debug:
+    var: rhocs_nodes
 
 - name: Add label to nodes
-  debug: 
-    msg: Not implemented yet
-    #k8s: 
-    #kubeconfig: "{{ kubeconfig }}"
-    #state: present
-    #definition: "{{ lookup('template', 'rhocs-ns.yaml') }}"
-    #with_items: rhocs_nodes
+  k8s: 
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Node
+      metadata:
+        name: "{{ item }}"    
+        labels:
+          cluster.ocs.openshift.io/openshift-storage: ""  
+  with_items: "{{ rhocs_nodes }}"
 
 - name: Create Storage Cluster
   k8s:
