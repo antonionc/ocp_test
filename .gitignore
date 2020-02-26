@@ -35,4 +35,4 @@ tags
 kubeconfig_*
 
 # Admin Passwordfile (To allow the same password for all clusters, but different for each user)
-admin_passwordfile
+*_passwordfile
