@@ -1,8 +1,16 @@
 ---
-- name: Make sure passlib is installed
+- name: Enable EPEL
   become: true
   yum:
-   name: python-passlib
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+  
+- name: Make sure passlib and python2-openshift are installed
+  become: true
+  yum:
+   name: 
+     - python-passlib
+     - python2-openshift
    state: latest
 - name: Debug
   debug:
