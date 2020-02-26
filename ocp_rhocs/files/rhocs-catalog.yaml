@@ -14,15 +14,11 @@
 #  sourceType: grpc
 #---
 apiVersion: operators.coreos.com/v1alpha1
-kind: CatalogSource
+kind: CatalogSourceConfig
 metadata:
-  name: ocs-catalogsource
+  name: ocs-catalogsourceconfig
   namespace: openshift-marketplace
 spec:
-  displayName: Openshift Container Storage
-  icon:
-    base64data: ""
-    mediatype: ""
-  image: quay.io/rhceph-dev/ocs-olm-operator:4.2-rc9
-  publisher: Red Hat
-  sourceType: grpc
+  targetNamespace: openshift-operators 
+  packages: ocs-operator
+   
