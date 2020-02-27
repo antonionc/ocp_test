@@ -6,6 +6,7 @@
       - node-role.kubernetes.io/rhocs= 
   when: rhocs_nodes | default([])| length==0 
   register: target_nodes
+  until: target_nodes.resources | length > 2
 
 - name: Create list of nodes to run RHOCS on
   set_fact:
