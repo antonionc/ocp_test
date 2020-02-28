@@ -2,5 +2,12 @@
 # tasks file for ocp_rhocs
 - import_tasks: install.yaml
   tags: install
+- import_tasks: common/tasks/removetag.yaml
+  vars:
+    tag_to_search: node-role.kubernetes.io/rhocs=
+    tag_to_remove: node-role.kubernetes.io/worker
+  tags: removetag
+  when: remove_worker_tag
+
 - import_tasks: storage_cluster.yaml
   tags: create_scluster
