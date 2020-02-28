@@ -4,6 +4,7 @@
    htpasswd:
     - admin: "{{ lookup('password', './admin_passwordfile length=24 ') }}"
     - developer: R3dH4t!!
+    - dev2: "{{ lookup('password', './dev2_passwordfile length=24 ') }}"
    admin_users:
     - admin
   roles: 
