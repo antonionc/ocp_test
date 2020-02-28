@@ -6,6 +6,7 @@
     - replicas: 1
       role: rhocs
       instance_type: m4.4xlarge
+    remove_worker_tag: true
   roles: 
   - ocp_mset
   - ocp_rhocs
