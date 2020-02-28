@@ -1,0 +1,26 @@
+- name: find nodes to remove tags from
+  k8s_info: 
+    kubeconfig: "{{ kubeconfig }}"
+    kind: Node
+    label_selectors:
+      - "{{ tag_to_search }}"
+  register: target_nodes
+  retries: 30
+  delay: 30
+  until: target_nodes.resources | length > 0
+
+- name: Create list of nodes to modify
+  set_fact:
+     final_nodes: "{{ target_nodes.resources | map (attribute='metadata')| list | map(attribute='name') | list }}" 
+
+
+- name: Debug nodes
+  debug:
+    var: final_nodes
+
+- name: Remove {{ tag_to_remove }} label to nodes
+  k8s: 
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition:  "{{ lookup('template', 'remove_label_from_node.yaml') }}"
+  with_items: "{{ final_nodes }}"
