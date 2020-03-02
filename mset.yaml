@@ -8,5 +8,16 @@
     - replicas: 1
       role: worker
       instance_type: m4.xlarge
+    remove_worker_tag: true
   roles: 
     - ocp_mset
+  tasks:
+    - name: Run tasks/other.yaml instead of 'main'
+      import_role:
+        name: common
+        tasks_from: removetag.yaml
+      vars:
+        tag_to_search: node-role.kubernetes.io/infra=
+        tag_to_remove: node-role.kubernetes.io/worker
+      tags: removetag
+      when: remove_worker_tag
