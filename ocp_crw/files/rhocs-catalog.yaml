@@ -1,0 +1,24 @@
+#apiVersion: operators.coreos.com/v1alpha1
+#kind: CatalogSource
+#metadata:
+#  name: local-storage-manifests
+#  namespace: openshift-marketplace
+#spec:
+#  description: An operator to manage local volumes
+#  displayName: Local Storage Operator
+#  icon:
+#    base64data: ""
+#    mediatype: ""
+#  image: quay.io/gnufied/local-registry:v4.2.0
+#  publisher: Red Hat
+#  sourceType: grpc
+#---
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSourceConfig
+metadata:
+  name: ocs-catalogsourceconfig
+  namespace: openshift-marketplace
+spec:
+  targetNamespace: openshift-operators 
+  packages: ocs-operator
+   

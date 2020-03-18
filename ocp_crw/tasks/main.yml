@@ -1,0 +1,6 @@
+---
+# tasks file for ocp_rhocs
+- import_tasks: install.yaml
+  tags: install
+- import_tasks: workspaces.yaml
+  tags: create_workspaces

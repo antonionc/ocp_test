@@ -1,0 +1,11 @@
+---
+- name: Create namespaces and Operator Groups
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'crw-ns.yaml') }}"
+- name: Create Subscription
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'crw-sub.yaml') }}"

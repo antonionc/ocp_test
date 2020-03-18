@@ -1,0 +1,5 @@
+---
+# Create new role for RHOCS
+- hosts: bastion-ocp
+  roles: 
+  - ocp_crw

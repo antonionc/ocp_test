@@ -1,0 +1,5 @@
+- name: Create Workspaces
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'crw-checluster.yaml') }}"
