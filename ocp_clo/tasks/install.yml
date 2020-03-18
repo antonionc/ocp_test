@@ -12,7 +12,7 @@
     kubeconfig: "{{ kubeconfig }}"
     state: present
     definition: "{{ lookup('file', 'eo-og.yaml') }}"
-- name: Get available channels
+- name: Get available ES channels
   k8s_facts:
     kubeconfig: "{{ kubeconfig }}"
     name: "elasticsearch-operator"
@@ -22,7 +22,7 @@
   when: es_channel is not defined
 - name: set local var
   set_fact:
-     es_channel: "{{ es_manifest.resources[0].status.channels[0].name }}"
+     es_channel: "{{ es_manifest.resources[0].status.defaultChannel }}"
   when: es_channel is not defined
 #- name: Subscribing on channel {{ es_channel }}
 # K8s module does not handle generateName correctly, so we use oc client
@@ -35,7 +35,8 @@
     src: eo-sub.yaml
     dest: /tmp/eo-sub.yaml
     mode: '0600'
-- name: Subscribing on channel {{ es_channel }}
+
+- name: Subscribing ES on channel {{ es_channel }}
   shell:
     cmd: KUBECONFIG={{ kubeconfig }} {{ oc_exec }} create -f /tmp/eo-sub.yaml
 - name: Create RBAC
@@ -48,8 +49,20 @@
     kubeconfig: "{{ kubeconfig }}"
     state: present
     definition: "{{ lookup('file', 'clo-og.yaml') }}"
-- name: Create CLO-Subscription 
+- name: Get available CLO channels
+  k8s_facts:
+    kubeconfig: "{{ kubeconfig }}"
+    name: "cluster-logging"
+    kind: "PackageManifest"
+    namespace: "openshift-marketplace"
+  register: clo_manifest
+  when: clo_channel is not defined
+- name: set local var
+  set_fact:
+     clo_channel: "{{ clo_manifest.resources[0].status.defaultChannel }}"
+  when: clo_channel is not defined
+- name: Create CLO-Subscription on channel {{ clo_channel }}
   k8s:
     kubeconfig: "{{ kubeconfig }}"
     state: present
-    definition: "{{ lookup('file', 'clo-sub.yaml') }}"
+    definition: "{{ lookup('template', 'clo-sub.yaml') }}"
