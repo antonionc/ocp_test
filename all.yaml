@@ -4,7 +4,7 @@
 # Increase the size of the workers
 - import_playbook: mset.yaml 
 - import_playbook: add_rhocs.yaml
-  import_playbook: infra.yaml
+- import_playbook: infra.yaml
 - import_playbook: clo.yaml 
 - import_playbook: clustermon.yaml 
 #- import_playbook: argocd.yaml 
