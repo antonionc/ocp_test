@@ -4,7 +4,7 @@ metadata:
   name: cluster-logging
   namespace: openshift-logging
 spec:
-  channel: "4.2"
+  channel: "{{ clo_channel }}"
   name: cluster-logging
   installPlanApproval: "Automatic"
   source: redhat-operators 
