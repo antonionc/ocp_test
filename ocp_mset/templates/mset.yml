@@ -56,6 +56,6 @@ spec:
             - name: kubernetes.io/cluster/{{ infrastructure_id }} 
               value: owned
           userDataSecret:
-            name: worker-user-data
+            name: {{mset_user_data_secret | default (mset_default_user_data_secret )}}
 
 

@@ -2,3 +2,4 @@
 # defaults file for ocp_mset
 mset_default_hdd_size: 120
 mset_default_instance_type: "m4.large"
+mset_default_user_data_secret: "worker-user-data"

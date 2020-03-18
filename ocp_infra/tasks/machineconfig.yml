@@ -1,0 +1,39 @@
+---
+- name: Get current worker machineconfigs
+  k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    kind: MachineConfig
+    label_selectors:
+    - machineconfiguration.openshift.io/role = worker
+  register: mcs
+
+- name: Create local var
+  set_fact:
+    mcs_to_mod: "{{ mcs_to_mod | default([]) + [ item.metadata.name ] }}"
+  with_items: "{{ mcs.resources }}"
+  when: item.metadata.name != "01-worker-kubelet"
+
+- name: Mcs to mod
+  debug:
+    var: mcs_to_mod
+
+- name: Add infra label to exisiting worker machineconfigs 
+  k8s:
+     kubeconfig: "{{ kubeconfig }}"
+     name: "{{ item }}"
+     resource_definition: 
+       apiVersion: machineconfiguration.openshift.io/v1
+       kind: MachineConfig
+       metadata:
+         labels:
+           machineconfiguration.openshift.io/pool_infra: 'true'
+  with_items: "{{ mcs_to_mod }}"
+
+- name: Add kubelet config for infras
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    resource_definition: "{{ lookup('file', 'infra-kubelet.yaml') }}" 
+- name: Add infra MachineConfigPool
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    resource_definition: "{{ lookup('file', 'infra-mcpool.yaml') }}" 

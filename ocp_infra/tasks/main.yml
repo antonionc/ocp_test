@@ -1,0 +1,6 @@
+---
+# tasks file for ocp_infra
+- import_tasks: machineconfig.yml
+  tags: machine_config
+- import_tasks: user-data-secret.yml
+  tags: user-data-secret
