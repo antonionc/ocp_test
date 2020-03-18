@@ -1,5 +1,7 @@
 ---
 # Choose your versoin from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
+es_channel: 4.2
+clo_channel: 4.2
 ocp_version: 4.3.1
 oc_checksum: 9938b9894b50a717a94c2baa6eceeabc23678f059852b76d67f8c1d520db2fd6
 oc_install_checksum: 3a01b5e64be2a7ac510dc8b55e88d7d541a2930174faec8b9224f97eb69f6817
