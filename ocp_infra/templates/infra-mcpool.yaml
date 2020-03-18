@@ -3,12 +3,12 @@ kind: MachineConfigPool
 metadata:
   labels:
     machineconfiguration.openshift.io/mco-built-in: ""
-  name: infra
+  name: {{ infra_role }}
 spec:
   machineConfigSelector:
     matchLabels:
-      machineconfiguration.openshift.io/pool_infra: 'true'
+      machineconfiguration.openshift.io/pool_{{ infra_role }}: 'true'
   nodeSelector:
     matchLabels:
-      node-role.kubernetes.io/infra: ""
+      node-role.kubernetes.io/{{ infra_role }}: ""
   paused: false

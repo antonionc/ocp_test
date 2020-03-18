@@ -17,23 +17,18 @@
   debug:
     var: mcs_to_mod
 
-- name: Add infra label to exisiting worker machineconfigs 
+- name: Add {{ infra_role }}  label to exisiting worker machineconfigs 
   k8s:
      kubeconfig: "{{ kubeconfig }}"
      name: "{{ item }}"
-     resource_definition: 
-       apiVersion: machineconfiguration.openshift.io/v1
-       kind: MachineConfig
-       metadata:
-         labels:
-           machineconfiguration.openshift.io/pool_infra: 'true'
+     resource_definition: "{{ lookup('template', 'infra-mconfig.yaml') }}"
   with_items: "{{ mcs_to_mod }}"
 
 - name: Add kubelet config for infras
   k8s:
     kubeconfig: "{{ kubeconfig }}"
-    resource_definition: "{{ lookup('file', 'infra-kubelet.yaml') }}" 
+    resource_definition: "{{ lookup('template', 'infra-kubelet.yaml') }}" 
 - name: Add infra MachineConfigPool
   k8s:
     kubeconfig: "{{ kubeconfig }}"
-    resource_definition: "{{ lookup('file', 'infra-mcpool.yaml') }}" 
+    resource_definition: "{{ lookup('template', 'infra-mcpool.yaml') }}" 

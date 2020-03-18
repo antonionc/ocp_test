@@ -4,8 +4,8 @@ metadata:
   annotations:
     machineconfiguration.openshift.io/generated-by-controller-version: d8511df92d0850463901b06b2d4a82a13aee6359
   labels:
-    machineconfiguration.openshift.io/pool_infra: 'true'
-  name: 01-infra-kubelet
+    machineconfiguration.openshift.io/pool_{{infra_role}}: 'true'
+  name: 01-{{infra_role}}-kubelet
 spec:
   config:
     ignition:
@@ -53,7 +53,7 @@ spec:
                 --kubeconfig=/var/lib/kubelet/kubeconfig \
                 --container-runtime=remote \
                 --container-runtime-endpoint=/var/run/crio/crio.sock \
-                --node-labels=node-role.kubernetes.io/infra,node.openshift.io/os_id=${ID} \
+                --node-labels=node-role.kubernetes.io/{{infra_role}},node.openshift.io/os_id=${ID} \
                 --minimum-container-ttl-duration=6m0s \
                 --volume-plugin-dir=/etc/kubernetes/kubelet-plugins/volume/exec \
                 --cloud-provider=aws \

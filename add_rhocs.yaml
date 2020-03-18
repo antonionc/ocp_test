@@ -2,11 +2,14 @@
 # Create new role for RHOCS
 - hosts: bastion-ocp
   vars:
+    rhocs_role: rhocs
     msets:
     - replicas: 1
-      role: rhocs
+      role: "{{ rhocs_role }}"
       instance_type: m4.4xlarge
-    remove_worker_tag: true
+    mset_user_data_secret: "{{rhocs_role}}-user-data"
+    infra_role: "{{rhocs_role}}"
   roles: 
+  - ocp_infra
   - ocp_mset
   - ocp_rhocs

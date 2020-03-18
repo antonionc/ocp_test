@@ -1,16 +1,12 @@
 ---
 # tasks file for ocp_rhocs
+#- import_role:
+#    name: ocp_infra
+#  vars:
+#    infra_role: "{{rhocs_role}}"
+#
 - import_tasks: install.yaml
   tags: install
-- name: Run Remove tag tasks
-  import_role:
-    name: common
-    tasks_from: removetag.yaml
-  vars:
-    tag_to_search: node-role.kubernetes.io/rhocs=
-    tag_to_remove: node-role.kubernetes.io/worker
-  tags: removetag
-  when: remove_worker_tag
 
 - import_tasks: storage_cluster.yaml
   tags: create_scluster
