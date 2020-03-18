@@ -2,7 +2,10 @@
 # tasks file for ocp_rhocs
 - import_tasks: install.yaml
   tags: install
-- import_tasks: common/tasks/removetag.yaml
+- name: Run Remove tag tasks
+  import_role:
+    name: common
+    tasks_from: removetag.yaml
   vars:
     tag_to_search: node-role.kubernetes.io/rhocs=
     tag_to_remove: node-role.kubernetes.io/worker
