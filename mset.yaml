@@ -2,6 +2,15 @@
 - hosts: bastion-ocp
   vars:
     msets:
+    - replicas: 2
+      delete_policy: Oldest
+      role: worker
+      instance_type: m4.xlarge
+  roles: 
+    - ocp_mset
+- hosts: bastion-ocp
+  vars:
+    msets:
     - replicas: 1
       role: worker
       instance_type: m4.xlarge

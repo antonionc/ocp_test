@@ -6,6 +6,9 @@ metadata:
   name: {{ infrastructure_id }}-{{ role }}-{{ region }}{{ zone }} 
   namespace: openshift-machine-api
 spec:
+{% if delete_policy is defined %}
+  deletePolicy: {{ delete_policy  }}
+{% endif %}
   replicas: {{ replicas }}
   selector:
     matchLabels:
