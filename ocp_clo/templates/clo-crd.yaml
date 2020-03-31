@@ -8,11 +8,15 @@ spec:
   logStore:
     type: "elasticsearch"  
     elasticsearch:
-      nodeCount: 1 
+      nodeCount: {{ clo_nodes | default (1) }} 
+{% if clo_node_selector is defined %}
+      nodeSelector: 
+        {{ clo_node_selector }}
+{% endif %}
       storage:
         storageClassName: gp2
         size: 200G
-      redundancyPolicy: "ZeroRedundancy"
+      redundancyPolicy: "{{ clo_redundancy | default ('ZeroRedundancy') }}"
       resources: 
         limits:
           cpu: "3000m"
@@ -24,10 +28,18 @@ spec:
     type: "kibana"  
     kibana:
       replicas: 1
+{% if clo_node_selector is defined %}
+      nodeSelector: 
+        {{ clo_node_selector }}
+{% endif %}
   curation:
     type: "curator"  
     curator:
       schedule: "30 3 * * *"
+{% if clo_node_selector is defined %}
+      nodeSelector:
+        {{ clo_node_selector }}
+{% endif %}
   collection:
     logs:
       type: "fluentd"  

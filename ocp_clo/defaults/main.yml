@@ -1,4 +1,3 @@
 ---
 # defaults file for ocp_clo
 # Node selector for the clo elements ('node-role.kubernetes.io/infra= ')
-clo_node_selector: ""
