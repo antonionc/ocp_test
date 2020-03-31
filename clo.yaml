@@ -4,5 +4,6 @@
    clo_nodes: 5
    clo_redundancy: SingleRedundancy
    clo_node_selector: "node-role.kubernetes.io/infra: ''"
+   clo_node_selector_annotation: "node-role.kubernetes.io/infra="
   roles: 
     - ocp_clo
