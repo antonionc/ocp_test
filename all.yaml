@@ -1,6 +1,7 @@
 ---
 - import_playbook: install.yaml 
 - import_playbook: configure.yaml 
+- import_playbook: add_le.yaml
 # Increase the size of the workers
 - import_playbook: mset.yaml 
 - import_playbook: add_rhocs.yaml
