@@ -1,0 +1,37 @@
+---
+- name: Read key file
+  slurp: 
+    src: "{{ [acme_dir , key_name ~ '.key'] | join('/') }}"
+  register: acme_read_key
+
+- name: Read cert file
+  slurp: 
+    src: "{{ [acme_dir , key_name ~ '.chain'] | join('/') }}"
+  register: acme_read_cert
+
+- name: Assign b64 to local variables
+  set_fact:
+    acme_cert_b64: "{{ acme_read_cert.content }}"
+    acme_key_b64: "{{ acme_read_key.content }}"
+
+- name: Create tls secret
+  vars:
+    secret_name: lets-encypt-router-tls
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'router-tls-secret.yaml') }}"
+
+- name: Patch ingress controller
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    merge_type: merge
+    name: default
+    namespace: openshift-ingress-operator
+    kind: ingresscontroller
+    api_version: operator.openshift.io/v1
+    definition:
+      spec:
+        defaultCertificate:
+          name: lets-encypt-router-tls 

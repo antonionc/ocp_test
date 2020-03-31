@@ -1,0 +1,14 @@
+---
+- name: Let the challenge be validated and retrieve the cert and intermediate certificate
+  acme_certificate:
+    acme_version: 2
+    acme_directory: https://acme-v02.api.letsencrypt.org/directory
+    account_key_src: "{{[ acme_dir, acme_key] | join ('/') }}"
+    csr: "{{ [acme_dir , key_name ~ '.csr'] | join('/') }}"
+    cert: "{{ [acme_dir , key_name ~ '.cert'] | join('/') }}"
+    fullchain_dest: "{{ [acme_dir , key_name ~ '.chain'] | join('/') }}"
+    chain: "{{ [acme_dir , key_name ~ '.intermediate'] | join('/') }}"
+    challenge: dns-01
+    remaining_days: 60
+    data: "{{ router_challenge }}"
+  when: router_challenge is changed

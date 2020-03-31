@@ -1,0 +1,7 @@
+---
+# defaults file for ocp_le
+acme_key: acme-account.key
+acme_dir: ~/keys
+key_name: router-tls-{{cluster_name|default('cluster')}}
+acme_key_length: 4096
+acme_email: anavarro@redhat.com

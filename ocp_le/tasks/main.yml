@@ -1,0 +1,18 @@
+---
+# tasks file for ocp_le
+- import_tasks: prepare.yaml
+  tags: prepare
+- import_tasks: request.yaml
+  tags: request
+- import_tasks: dns_aws.yaml
+  vars:
+    aws_route_state: present
+  tags: dns
+- import_tasks: response.yaml
+  tags: response
+- import_tasks: dns_aws.yaml
+  vars:
+    aws_route_state: absent
+  tags: dns
+- import_tasks: ingress.yaml
+  tags: ingress

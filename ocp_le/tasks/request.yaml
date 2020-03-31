@@ -1,0 +1,32 @@
+--- 
+- name: Generate Private Key
+  openssl_privatekey:
+    path: "{{ [acme_dir, key_name ~ '.key'] | join('/') }}"
+    mode: "{{ acme_privatekey_mode |default ('0600')}}"
+    type: RSA
+    size: "{{ acme_key_length }}"
+
+- name: Generate CSR
+  openssl_csr:
+    path: "{{ [acme_dir , key_name ~ '.csr'] | join('/') }}"
+    privatekey_path: "{{ [acme_dir, key_name ~ '.key'] | join('/') }}"
+    common_name: api.{{ cluster_name }}.{{ base_domain }}
+    subject_alt_name: DNS:*.apps.{{ cluster_name }}.{{ base_domain }}
+    ocsp_must_staple: "{{ ocsp_must_staple | default ('no')}}"
+    use_common_name_for_san: no
+    
+
+- name: Create a challenge for *.apps.{{ cluster_name }}.{{ base_domain }}  using a account key file.
+  acme_certificate:
+    acme_version: 2
+    acme_directory: https://acme-v02.api.letsencrypt.org/directory
+    account_key_src: "{{[ acme_dir, acme_key] | join ('/') }}"
+    csr: "{{ [acme_dir , key_name ~ '.csr'] | join('/') }}"
+    dest: "{{ [acme_dir , key_name ~ '.cert'] | join('/') }}"
+    fullchain_dest: "{{ [acme_dir , key_name ~ '.chain'] | join('/') }}"
+    challenge: dns-01
+  register: router_challenge
+
+- name: challenge sent
+  debug:
+    var: router_challenge

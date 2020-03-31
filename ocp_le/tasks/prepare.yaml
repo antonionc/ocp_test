@@ -1,0 +1,29 @@
+---
+- name: ensure required packages are installed
+  become: yes
+  yum:
+    name:
+      - python2-boto.noarch
+    state: present
+
+- name: ensure acme_path exists
+  file:
+    dest: "{{ acme_dir }}"
+    state: directory
+
+- name: Generate acme_account key if not present
+  openssl_privatekey:
+    path: "{{[ acme_dir, acme_key] | join ('/') }}"
+    type: ECC
+    curve: secp384r1
+
+- name: Make sure acme_account exists and has given contacts. We agree to TOS.
+  acme_account:
+    account_key_src: "{{[ acme_dir, acme_key] | join ('/') }}"
+    acme_version: 2
+    acme_directory: https://acme-v02.api.letsencrypt.org/directory
+    state: present
+    terms_agreed: yes
+    contact:
+    - mailto:{{acme_email}}
+

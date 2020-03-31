@@ -1,0 +1,15 @@
+---
+- name: Set state to {{ aws_route_state }} on dns record {{ item.key }} in AWS Route53
+  route53:
+    state: "{{ aws_route_state }}"
+    zone: "{{ base_domain }}"
+    record: "{{ item.key }}"
+    type: TXT
+    ttl: 60
+    value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"' ) | list }}"
+    overwrite: true
+    aws_access_key: "{{ aws_key }}"
+    aws_secret_key: "{{ aws_secret }}"
+    wait: true
+  with_dict: "{{ router_challenge.challenge_data_dns }}"
+  when: router_challenge is changed

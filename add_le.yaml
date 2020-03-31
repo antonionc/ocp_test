@@ -1,0 +1,4 @@
+---
+- hosts: bastion-ocp
+  roles: 
+  - ocp_le
