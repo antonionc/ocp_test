@@ -39,3 +39,5 @@ kubeconfig_*
 
 # Admin Passwordfile (To allow the same password for all clusters, but different for each user)
 *_passwordfile
+# Ansible Vault password
+.ansible_vault_password

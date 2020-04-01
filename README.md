@@ -6,7 +6,7 @@ Simple playbook that installs and configures a new cluster in aws using openshif
 The simplest way to use is:
 
 `shell
-$ ansible-playbook -i inventories all.yaml -e cluster_name=mycluster
+$  ansible-playbook -i inventories --vault-password-file .ansible_vault_password  all.yaml -e cluster_name=test04 
 `
 
 ## Configuration
