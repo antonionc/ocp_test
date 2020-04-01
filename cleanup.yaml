@@ -3,4 +3,4 @@
   roles: 
     - ocp_test
   vars: 
-    - uninstall_ocp: "true"
+    uninstall_ocp: "true"

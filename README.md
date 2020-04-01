@@ -206,3 +206,12 @@ This playbook installs argocd on the cluster
 ### add_crw (ocp_crw) (WIP)
 
 Adds Code Ready Workspaces to the existing cluster
+
+### cleanup.yaml (ocp_test)
+
+This playbooks deletes the cluster and removes the configuration directory from the install host
+
+```yaml
+vars:
+   uninstall_ocp: "true"
+```
