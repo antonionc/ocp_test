@@ -24,4 +24,4 @@ networking:
 platform:
   aws:
     region: eu-central-1
-pullSecret: {{ pull_secret | to_json | quote }} 
+pullSecret: {{ pull_secret | quote }} 
