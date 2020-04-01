@@ -172,6 +172,7 @@ supported varibles:
    clo_nodes: 3
    clo_redundancy: SingleRedundancy
    clo_node_selector: "node-role.kubernetes.io/infra: ''"
+   clo_node_selector_annotation: "node-role.kubernetes.io/infra="
 ```
 
 ### clustermon.yaml (ocp_clustermon)
