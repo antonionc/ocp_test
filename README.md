@@ -123,7 +123,7 @@ The first one to scale to two and mark the delete_policy to Oldest
       delete_policy: Oldest
       role: worker
       instance_type: m4.xlarge
-```i
+```
 
 
 ### add_rhocs.yaml (ocp_infra, ocp_mset, ocp_rhocs)
