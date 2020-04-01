@@ -6,8 +6,10 @@ metadata:
 data:
   config.yaml: |
     prometheusK8s:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
       volumeClaimTemplate:
         metadata:
           name: prompvc
@@ -16,6 +18,10 @@ data:
             requests:
               storage: 40Gi
     alertmanagerMain:
+{% if clmon_node_selector is defined %}
+      nodeSelector:
+        {{ clmon_node_selector }}
+{% endif %}
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       volumeClaimTemplate:
@@ -26,17 +32,27 @@ data:
             requests:
               storage: 10Gi
     prometheusOperator:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
     kubeStateMetrics:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
     grafana:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
     telemeterClient:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
     k8sPrometheusAdapter:
+{% if clmon_node_selector is defined %}
       nodeSelector:
-        node-role.kubernetes.io/infra: ""
+        {{ clmon_node_selector }}
+{% endif %}
