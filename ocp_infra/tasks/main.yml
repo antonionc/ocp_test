@@ -6,3 +6,4 @@
   tags: user-data-secret
 - import_tasks: router-config.yml
   tags: move-ingress
+  when: "{{ move_ingress is 'true' }}"
