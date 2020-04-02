@@ -4,7 +4,15 @@
   tags: install
 # Wait a little to make sure operator is up
 - name: Wait for operator
-  pause:
-    seconds: 5
+  k8s_info: 
+    api_version: operators.coreos.com/v1alpha1
+    kubeconfig: "{{ kubeconfig }}"
+    kind: Subscription
+    name: cluster-logging
+    namespace: openshift-logging
+  register: clo_sub
+  retries: 30
+  delay: 5
+  until: clo_sub.resources[0].status.state == 'AtLatestKnown'
 - import_tasks: setup.yml
   tags: setup

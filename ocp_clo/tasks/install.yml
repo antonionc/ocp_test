@@ -24,21 +24,11 @@
   set_fact:
      es_channel: "{{ es_manifest.resources[0].status.defaultChannel }}"
   when: es_channel is not defined
-#- name: Subscribing on channel {{ es_channel }}
-# K8s module does not handle generateName correctly, so we use oc client
-#  k8s:
-#    kubeconfig: "{{ kubeconfig }}"
-#    state: present
-#    definition: "{{ lookup('template', 'eo-sub.yaml') }}"
-- name: Upload file
-  template: 
-    src: eo-sub.yaml
-    dest: /tmp/eo-sub.yaml
-    mode: '0600'
-
-- name: Subscribing ES on channel {{ es_channel }}
-  shell:
-    cmd: KUBECONFIG={{ kubeconfig }} {{ oc_exec }} create -f /tmp/eo-sub.yaml
+- name: Subscribing on channel {{ es_channel }}
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'eo-sub.yaml') }}"
 - name: Create RBAC
   k8s:
     kubeconfig: "{{ kubeconfig }}"
