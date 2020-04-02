@@ -8,7 +8,7 @@
       role: "{{ rhocs_role }}"
       instance_type: m4.4xlarge
     mset_user_data_secret: "{{rhocs_role}}-user-data"
-    move_ingress: "false"
+    move_ingress: false
     infra_role: "{{rhocs_role}}"
   roles: 
   - ocp_infra

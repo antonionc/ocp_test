@@ -4,6 +4,6 @@
   tags: machine_config
 - import_tasks: user-data-secret.yml
   tags: user-data-secret
-- import_tasks: router-config.yml
+- include_tasks: router-config.yml
   tags: move-ingress
-  when: "{{ move_ingress is 'true' }}"
+  when: move_ingress 

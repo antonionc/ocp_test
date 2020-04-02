@@ -2,11 +2,11 @@
 - hosts: bastion-ocp
   vars:
     msets:
-    - replicas: 2
+    - replicas: 1
       role: infra
       instance_type: m4.2xlarge
     mset_user_data_secret: "infra-user-data"
-    move_ingress: "true"
+    move_ingress: true
   roles: 
     - ocp_infra
     - ocp_mset
