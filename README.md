@@ -166,6 +166,7 @@ supported varibles:
 - *clo_node_selector_annotation* Annotation format of the node selector used in the openshift-logging  openshift-operators-redhat  namespaces
 - *clo_nodes* number of elastic search data nodes to use (defaults to 1)
 - *clo_redundancy* redundancy policy to use for ElasticSearch indices, defaults to 'ZeroRedundancy'
+- *clo_sc_name* name of the storage class to use for ES PVC (defaults to gp2)
 
 ```yaml
   vars:

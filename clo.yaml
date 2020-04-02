@@ -1,9 +1,10 @@
 ---
 - hosts: bastion-ocp
   vars:
-   clo_nodes: 5
+   clo_nodes: 3
    clo_redundancy: SingleRedundancy
    clo_node_selector: "node-role.kubernetes.io/infra: ''"
    clo_node_selector_annotation: "node-role.kubernetes.io/infra="
+   clo_sc_name: "ocs-storagecluster-ceph-rbd"
   roles: 
     - ocp_clo

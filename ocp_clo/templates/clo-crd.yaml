@@ -14,7 +14,7 @@ spec:
         {{ clo_node_selector }}
 {% endif %}
       storage:
-        storageClassName: gp2
+        storageClassName: {{ clo_sc_name | default('gp2') }}
         size: 200G
       redundancyPolicy: "{{ clo_redundancy | default ('ZeroRedundancy') }}"
       resources: 
