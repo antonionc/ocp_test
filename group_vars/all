@@ -3,9 +3,9 @@
 # Version 4.3
 es_channel: 4.3
 clo_channel: 4.3
-ocp_version: 4.3.1
-oc_checksum: 9938b9894b50a717a94c2baa6eceeabc23678f059852b76d67f8c1d520db2fd6
-oc_install_checksum: 3a01b5e64be2a7ac510dc8b55e88d7d541a2930174faec8b9224f97eb69f6817
+ocp_version: 4.3.9
+oc_checksum: 872cb68a858d54a4b72407fe1f0442eff1e8fce2d48bbddc8e583a5d438dcb46
+oc_install_checksum: 633c344343284d083105fd804da9e30a1a5e321f41a575526ba6f9e174376fd3
 # Version 4.2
 #es_channel: 4.2
 #clo_channel: 4.2
