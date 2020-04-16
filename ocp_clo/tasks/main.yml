@@ -1,6 +1,8 @@
 ---
 # tasks file for ocp_clo
-- import_tasks: install.yml
+- import_tasks: es.yml
+  tags: install
+- import_tasks: clo.yml
   tags: install
 # Wait a little to make sure operator is up
 - name: Wait for operator
