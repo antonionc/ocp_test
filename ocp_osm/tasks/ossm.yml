@@ -1,0 +1,31 @@
+---
+- name: Create Namespaces
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+  - oor-namespace.yaml
+  - ossm-control-plane-namespace.yaml
+- name: Create OSSM Operator Group
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('file', 'oor-og.yaml') }}"
+- name: Get available OSSM channels
+  k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    name: "servicemeshoperator"
+    kind: "PackageManifest"
+    namespace: "openshift-marketplace"
+  register: ossm_manifest
+  when: ossm_channel is not defined
+- name: set local var
+  set_fact:
+     ossm_channel: "{{ ossm_manifest.resources[0].status.defaultChannel }}"
+  when: ossm_channel is not defined
+- name: Subscribing on channel {{ ossm_channel }}
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'ossm-sub.yaml') }}"

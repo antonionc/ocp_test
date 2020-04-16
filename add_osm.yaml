@@ -1,0 +1,6 @@
+---
+- hosts: bastion-ocp
+  vars:
+    ossm_es_sc_name: "ocs-storagecluster-ceph-rbd"
+  roles:
+    - ocp_osm

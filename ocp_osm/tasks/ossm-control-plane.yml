@@ -1,0 +1,18 @@
+---
+- name: Create Namespaces
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+    - ossm-control-plane-namespace.yaml
+- name: Creating Service Mesh Control Plane in namespace {{ossm_system_ns}}
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'ossm-control-plane.yaml') }}"
+- name: Creating Service Mesh Member Roll in namespace {{ossm_system_ns}}
+  k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    state: present
+    definition: "{{ lookup('template', 'ossm-member-roll.yaml') }}"

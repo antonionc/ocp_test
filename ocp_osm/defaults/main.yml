@@ -1,0 +1,6 @@
+---
+# defaults file for ocp_osm
+ossm_system_ns: istio-system
+ossm_member_roll: ""
+ossm_es_sc_name: "gp2"
+ossm_es_pvc_size: 200Gi

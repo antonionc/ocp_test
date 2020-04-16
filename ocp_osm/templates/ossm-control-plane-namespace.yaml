@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ ossm_system_ns }}
+{%if osm_node_selector_annotation is defined %}
+  annotations:
+    openshift.io/node-selector: "{{ osm_node_selector_annotation }}"
+{% endif %}
+  labels:
+    openshift.io/cluster-logging: "true"
+    openshift.io/cluster-monitoring: "true"

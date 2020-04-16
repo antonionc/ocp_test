@@ -1,0 +1,15 @@
+---
+# tasks file for ocp_osm
+# Install ES Operator
+- import_role: 
+    name: ocp_clo
+    tasks_from: es.yml
+  tags: elastic-search
+- import_tasks: jaeger.yml
+  tags: jaeger
+- import_tasks: kiali.yml
+  tags: kiali
+- import_tasks: ossm.yml
+  tags: ossm
+- import_tasks: ossm-control-plane.yml
+  tags: ossm_control_plane

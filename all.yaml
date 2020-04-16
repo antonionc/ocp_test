@@ -8,4 +8,5 @@
 - import_playbook: infra.yaml
 - import_playbook: clo.yaml 
 - import_playbook: clustermon.yaml 
-#- import_playbook: argocd.yaml 
+- import_playbook: add_osm.yaml 
+- import_playbook: argocd.yaml 
