@@ -208,6 +208,10 @@ This playbook installs argocd on the cluster
 
 Adds Code Ready Workspaces to the existing cluster
 
+### add_osm (ocp_osm) (WIP)
+
+Adds OpenShift Service Mesh to the existing cluster
+
 ### cleanup.yaml (ocp_test)
 
 This playbooks deletes the cluster and removes the configuration directory from the install host
