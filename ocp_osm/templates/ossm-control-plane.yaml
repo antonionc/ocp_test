@@ -33,5 +33,5 @@ spec:
       enabled: true
     tracing:
       enabled: true
-    jaeger:
-      template: all-in-one
+      jaeger:
+        template: all-in-one
