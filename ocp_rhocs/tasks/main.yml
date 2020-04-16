@@ -7,6 +7,16 @@
 #
 - import_tasks: install.yaml
   tags: install
-
+- name: Wait for operator
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kubeconfig: "{{ kubeconfig }}"
+    kind: Subscription
+    name: ocs-operator
+    namespace: openshift-storage
+  register: rhocs_sub
+  retries: 36
+  delay: 30
+  until: rhocs_sub.resources[0] is defined and rhocs_sub.resources[0].status is defined and rhocs_sub.resources[0].status.state is defined and rhocs_sub.resources[0].status.state == 'AtLatestKnown'
 - import_tasks: storage_cluster.yaml
   tags: create_scluster
