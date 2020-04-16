@@ -1,6 +1,6 @@
 ---
 - name: Read cluster
-  k8s_facts:
+  k8s_info:
     api: config.openshift.io/v1
     kubeconfig: "{{ kubeconfig }}"
     kind: Infrastructure
@@ -16,7 +16,7 @@
   set_fact:
     region: "{{ cluster_info.resources[0].status.platformStatus.aws.region }}"
 - name: Read ami
-  k8s_facts:
+  k8s_info:
     api: machine.openshift.io/v1beta1
     kubeconfig: "{{ kubeconfig }}"
     kind: MachineSet
