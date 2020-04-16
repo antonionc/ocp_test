@@ -25,3 +25,6 @@ platform:
   aws:
     region: eu-central-1
 pullSecret: {{ pull_secret | quote }} 
+{% if ssh_key_path is defined %}
+sshKey: {% include ssh_key_path %}
+{% endif %}
