@@ -1,8 +1,6 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfigPool
 metadata:
-  labels:
-    machineconfiguration.openshift.io/mco-built-in: ""
   name: {{ infra_role }}
 spec:
   machineConfigSelector:
