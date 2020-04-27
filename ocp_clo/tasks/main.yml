@@ -15,6 +15,6 @@
   register: clo_sub
   retries: 30
   delay: 5
-  until: clo_sub.resources[0].status.state == 'AtLatestKnown'
+  until: clo_sub.resources[0] is defined and clo_sub.resources[0].status is defined and clo_sub.resources[0].status.state is defined and clo_sub.resources[0].status.state == 'AtLatestKnown'
 - import_tasks: setup.yml
   tags: setup
