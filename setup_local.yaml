@@ -8,10 +8,10 @@
       register: local_container_image
     - debug: 
         var: local_container_image
-    - debug:
-        msg: "The condition: {{(local_container_image.images | length > 0)}}"
     - name: build the image
       command: buildah bud --tag {{ local_container_image_name }} -f Dockerfile local_container
       when: "{{(local_container_image.images | length == 0)}}"
+    - name: Start local container
+      command: podman run --name {{ local_container_name | default("bastion_ocp")}} {{ local_container_image_name }} 
 
       
