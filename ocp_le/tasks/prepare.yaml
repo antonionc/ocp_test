@@ -3,7 +3,7 @@
   become: yes
   yum:
     name:
-      - python2-boto.noarch
+      - "{{python_boto_lib }}"
     state: present
 
 - name: ensure acme_path exists
