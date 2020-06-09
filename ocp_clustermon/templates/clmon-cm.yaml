@@ -14,9 +14,10 @@ data:
         metadata:
           name: prompvc
         spec:
+          storageClassName: {{ clmon_sc_name }}
           resources:
             requests:
-              storage: 40Gi
+              storage: {{ clmon_prom_pvc_size}}
     alertmanagerMain:
 {% if clmon_node_selector is defined %}
       nodeSelector:
@@ -28,9 +29,10 @@ data:
         metadata:
           name: alertmanpvc
         spec:
+          storageClassName: {{ clmon_sc_name }}
           resources:
             requests:
-              storage: 10Gi
+              storage: {{ clmon_am_pvc_size }}
     prometheusOperator:
 {% if clmon_node_selector is defined %}
       nodeSelector:

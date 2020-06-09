@@ -14,7 +14,7 @@
     namespace: openshift-logging
   register: clo_sub
   retries: 30
-  delay: 5
+  delay: 20
   until: clo_sub.resources[0] is defined and clo_sub.resources[0].status is defined and clo_sub.resources[0].status.state is defined and clo_sub.resources[0].status.state == 'AtLatestKnown'
 - import_tasks: setup.yml
   tags: setup

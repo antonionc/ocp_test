@@ -1,2 +1,5 @@
 ---
 # defaults file for ocp_clustermon
+clmon_sc_name: "gp2"
+clmon_prom_pvc_size: 40Gi
+clmon_am_pvc_size: 10Gi

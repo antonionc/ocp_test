@@ -2,5 +2,6 @@
 - hosts: bastion-ocp
   vars:
    clmon_node_selector: 'node-role.kubernetes.io/infra: ""'
+   clmon_sc_name: "gp2"
   roles: 
     - ocp_clustermon
