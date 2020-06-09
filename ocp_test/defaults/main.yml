@@ -1,2 +1,3 @@
 ---
 # defaults file for ocp_test
+region: eu-central-1

@@ -23,7 +23,7 @@ networking:
   - 172.30.0.0/16
 platform:
   aws:
-    region: eu-central-1
+    region: {{ region }}
 pullSecret: {{ pull_secret | quote }} 
 {% if ssh_key_path is defined %}
 sshKey: {% include ssh_key_path %}
