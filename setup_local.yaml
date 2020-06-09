@@ -1,0 +1,25 @@
+---
+- name: create local container
+  hosts: localhost
+  vars:
+    local_container_name: bastion-ocp
+    local_container_image_name: "{{local_container_name+'_image'}}"
+  tasks:
+    - name: make sure the local image exists
+      podman_image:
+        name:  "{{ local_container_image_name  }}"
+        path: ./local_container
+        build:
+          format: docker
+    - name: Start local container
+      containers.podman.podman_container:
+        name: "{{ local_container_name }}"
+        image: "{{ local_container_image_name }}"
+        state: started
+    - name: Set connection for {{local_container_name}} as podman       
+      add_host:
+        hostname: "{{ local_container_name }}"
+        ansible_connection: podman
+        ansible_user: ansible
+        python_oc_pkg: python3-openshift
+        python_boto_lib: python3-boto
